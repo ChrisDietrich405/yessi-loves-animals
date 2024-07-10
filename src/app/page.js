@@ -9,35 +9,35 @@ export default function Home() {
     <div sx={{ backgroundColor: "#282c34" }}>
       <Navbar />
       <Container sx={{ marginBottom: "40px" }}>
-        <Grid container spacing={2} mt={2}>
-          <Grid item xs={4} style={{ alignItems: "right" }}>
+        <Grid container mt={2}>
+          <Grid item xs={12} md={4} style={{ alignItems: "right" }}>
             {" "}
             <img
-              className={styles.practice_picture}
+              className={styles.yessi_picture}
               src="../img/yessi1.jpg"
               alt="practice"
             />
           </Grid>
           <Grid
             item
-            xs={8}
+            xs={12}
+            md={8}
             style={{
               textAlign: "left",
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-around",
-              alignItems: "space-around",
-              height: "400px",
+              paddingLeft: "24px",
             }}
           >
             <Typography
+              className={styles.text}
               fontSize="32px"
               style={{
                 textAlign: "left",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                height: "100%",
               }}
             >
               Hello. I'm Yessi and I love animals, especially chickens, ducks
@@ -48,6 +48,7 @@ export default function Home() {
 
             <Typography
               sx={{
+                marginTop: "10px",
                 padding: "10px 30px",
                 boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
               }}
@@ -60,8 +61,6 @@ export default function Home() {
               the breath of life in them.’ And it was so.” —Genesis 1:29-30
             </Typography>
           </Grid>
-          <Grid item xs={4}></Grid>
-          <Grid item xs={8}></Grid>
         </Grid>
         <Box
           sx={{
@@ -70,7 +69,9 @@ export default function Home() {
             justifyContent: "center",
           }}
         >
-          <ImageList sx={{ display: "flex", justifyContent: "center" }} />
+          <div className={styles.image_list_wrapper}>
+            <ImageList sx={{ display: "flex", justifyContent: "center" }} />
+          </div>
         </Box>
         <Typography fontSize="32px" sx={{ textAlign: "center" }}>
           “Blessed are the merciful, for they will receive mercy.” —Matthew 5:7

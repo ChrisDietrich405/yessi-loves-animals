@@ -4,87 +4,27 @@
   background-color: #282c34 !important;
 }
 
-.App-MainLogo {
-  height: 15vmin;
-}
-
-.App-logoL2R {
-  height: 20vmin;
-  pointer-events: none;
-}
-
-.App-logoR2L {
-  height: 20vmin;
-  pointer-events: none;
-}
-
-.practice_picture {
-  height: 500px;
-  width: 300px;
+.yessi_picture {
+  height: auto;
+  width: 100%;
   border-radius: 20px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-MainLogo {
-    animation: zoom-in-zoom-out infinite 3s linear;
-  }
+.image_list_wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logoL2R {
-    animation: Logo-spinL2R infinite 5s ease-in-out;
-  }
+.image_list_wrapper img {
+  display: block;
+  max-width: 100%;
+  object-fit: cover;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logoR2L {
-    animation: Logo-spinR2L infinite 5s ease-in-out;
-  }
-}
-.App-header {
-  min-height: 21vmin;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.logos {
-  display: flex;
-  justify-content: space-evenly;
-  padding-top: 50px;
-}
-
-.App-link {
-  color: #f1a20d;
-}
-
-@keyframes Logo-spinL2R {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes Logo-spinR2L {
-  from {
-    transform: rotate(360deg);
-  }
-  to {
-    transform: rotate(0deg);
-  }
-}
-
-@keyframes zoom-in-zoom-out {
-  0% {
-    transform: scale(1, 1);
-  }
-  50% {
-    transform: scale(1.5, 1.5);
-  }
-  100% {
-    transform: scale(1, 1);
+@media screen and (max-width: 480px) {
+  .text {
+    font-size: 20px;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 }

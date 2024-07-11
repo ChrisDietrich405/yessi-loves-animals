@@ -1,7 +1,6 @@
-import Navbar from "./components/Navbar";
-import { Grid, Typography, Container, Box } from "@mui/material";
+import { Box, Container, Grid, Typography } from "@mui/material";
 import ImageList from "./components/ImageList";
-import Image from "next/image";
+import Navbar from "./components/Navbar";
 import styles from "./page.module.css";
 
 export default function Home() {
@@ -9,7 +8,7 @@ export default function Home() {
     <div sx={{ backgroundColor: "#282c34" }}>
       <Navbar />
       <Container sx={{ marginBottom: "40px" }}>
-        <Grid container mt={2}>
+        <Grid container mt={2} spacing={{ xs: 0, md: 4 }}>
           <Grid item xs={12} md={4} style={{ alignItems: "right" }}>
             {" "}
             <img
@@ -27,7 +26,6 @@ export default function Home() {
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-around",
-              paddingLeft: "24px",
             }}
           >
             <Typography
@@ -73,7 +71,7 @@ export default function Home() {
             <ImageList sx={{ display: "flex", justifyContent: "center" }} />
           </div>
         </Box>
-        <Typography fontSize="32px" sx={{ textAlign: "center" }}>
+        <Typography fontSize="32px" sx={{ textAlign: "center" }} mt={"24px"}>
           “Blessed are the merciful, for they will receive mercy.” —Matthew 5:7
         </Typography>
       </Container>

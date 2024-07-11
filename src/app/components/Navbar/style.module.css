@@ -2,3 +2,11 @@
   height: 15%;
   width: 15%;
 }
+
+.navbar_btn {
+  background-color: #282c34;
+}
+
+.navbar_btn:hover {
+  background-color: #282c34;
+}

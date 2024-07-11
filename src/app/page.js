@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <div sx={{ backgroundColor: "#282c34" }}>
       <Navbar />
-      <Container sx={{ marginBottom: "40px" }}>
+      <Container sx={{ margin: "40px" }}>
         <Grid container mt={2} spacing={{ xs: 0, md: 4 }}>
           <Grid item xs={12} md={4} style={{ alignItems: "right" }}>
             {" "}
@@ -25,7 +25,6 @@ export default function Home() {
               textAlign: "left",
               display: "flex",
               flexDirection: "column",
-              justifyContent: "space-around",
             }}
           >
             <Typography
@@ -33,6 +32,8 @@ export default function Home() {
               fontSize="32px"
               style={{
                 textAlign: "left",
+                marginTop: "40px",
+                marginBottom: "20px",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",

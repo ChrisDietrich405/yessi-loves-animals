@@ -24,19 +24,11 @@ const itemData = [
     title: "Breakfast",
   },
   {
-    img: "../img/yessi6.jpg",
-    title: "Breakfast",
-  },
-  {
     img: "../img/yessi7.jpg",
     title: "Breakfast",
   },
   {
     img: "../img/yessi10.jpg",
-    title: "Breakfast",
-  },
-  {
-    img: "../img/yessi8.jpg",
     title: "Breakfast",
   },
   {

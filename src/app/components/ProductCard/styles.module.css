@@ -1,0 +1,29 @@
+.product_container {
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 40px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  padding: 30px;
+  background: #fff;
+  border-radius: 16px;
+}
+
+/* button {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+button:hover {
+  font-size: 0.95rem;
+  transition: 0.3s;
+  border-color: rgba(0, 0, 0, 0.4);
+} */
+
+.product_container_img {
+  max-width: 150px;
+  max-height: 200px;
+}

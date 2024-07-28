@@ -2,7 +2,7 @@ import * as jwt from "jose";
 import { NextResponse } from "next/server";
 
 export async function middleware(req, res) {
-  console.log("hello middleware")
+  console.log("hello middleware");
   try {
     const authorization = req.headers.get("authorization");
 
@@ -15,7 +15,7 @@ export async function middleware(req, res) {
     const secret = new TextEncoder().encode(process.env.JWT_SECRET);
 
     const user = await jwt.jwtVerify(token, secret);
-    console.log(user)
+    req.userId = user.userId;
   } catch (error) {
     console.log(error);
     return NextResponse.json({ message: "unauthorized" }, { status: 401 });
@@ -23,5 +23,5 @@ export async function middleware(req, res) {
 }
 
 export const config = {
-  matcher: "/api/products",
+  matcher: ["/api/products", "/api/cart", "/api/cart/:path*"],
 };

@@ -2,18 +2,11 @@ import { jwtVerify } from "jose"; // Import the specific function you need from 
 import { NextResponse } from "next/server";
 
 export const config = {
-  matcher: ["/api/products", "/api/cart", "/api/cart/:path*"], // Define routes for which the middleware is applied
+  matcher: ["/api/products", "/api/cart", "/api/cart/:path*"],
 };
 
-// export async function middleware(req) {
-//   console.log("hello middleware"); // This log should appear in your server console
-
-//   const response = NextResponse.next(); // Proceed to the next middleware or API route
-//   return response;
-// }
-
 export async function middleware(req) {
-  console.log("hello middleware");
+  
   try {
     const authorization = req.headers.get("authorization"); // Get the Authorization header
 
@@ -31,8 +24,9 @@ export async function middleware(req) {
     // Add userId to the request headers using the setHeader function
     const response = NextResponse.next();
     response.headers.set("x-decoded-id", payload.userId); // Set custom header with userId
-    
-    return response; // Proceed to the next middleware or API route
+    console.log("payload", payload.userId);
+
+    return response;
   } catch (error) {
     console.log(error); // Log any errors that occur during token verification
     return NextResponse.json({ message: "unauthorized" }, { status: 401 }); // Return unauthorized response

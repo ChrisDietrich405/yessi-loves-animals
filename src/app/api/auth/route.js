@@ -12,7 +12,6 @@ dotenv.config();
 // }
 
 export const POST = async (req) => {
-
   // try {
   const { email, password } = await req.json();
   console.log(email);
@@ -45,7 +44,7 @@ export const POST = async (req) => {
   try {
     // Find user in the database
     const existingAccount = await CustomersModel.findOne({ email });
-    
+
     if (!existingAccount) {
       return NextResponse.json(
         { status: 401, message: "Incorrect credentials" },
@@ -69,13 +68,12 @@ export const POST = async (req) => {
     }
 
     const token = jwt.sign(
-      { id: existingAccount._id },
+      { userId: existingAccount._id },
       process.env.JWT_SECRET,
       {
         expiresIn: "2d",
       }
     );
-   
 
     //   // Get token expiration
     //   const expires = getTokenExpiration(token);

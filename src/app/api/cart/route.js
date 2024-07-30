@@ -1,7 +1,7 @@
 import CartModel from "../../models/cart";
 import { NextResponse, NextRequest } from "next/server";
 import mongoose from "mongoose";
-import { ColorLens } from "@mui/icons-material";
+
 
 // export async function GET(req) {
 //   console.log("first"); // Log message to indicate the route handler is executed

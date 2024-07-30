@@ -53,7 +53,10 @@ export async function PUT(req, { params }) {
 
     const productBody = await req.json();
 
-    const updatedProduct = await ProductsModel.findOneAndUpdate(id, productBody);
+    const updatedProduct = await ProductsModel.findOneAndUpdate(
+      id,
+      productBody
+    );
 
     return NextResponse.json(updatedProduct, {
       status: 200,
@@ -78,11 +81,9 @@ export async function DELETE(req, { params }) {
 
     const id = new mongoose.Types.ObjectId(params.id);
 
-    const productBody = await req.json();
+    await ProductsModel.findOneAndDelete(id);
 
-    const updatedProduct = await ProductsModel.findOneAndUpdate(id, productBody);
-
-    return NextResponse.json(updatedProduct, {
+    return NextResponse.json("successfully deleted", {
       status: 200,
     });
   } catch (error) {

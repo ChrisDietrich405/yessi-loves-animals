@@ -23,6 +23,10 @@ const customerSchema = new Schema({
     type: String,
     required: true,
   },
+  isAdmin: {
+    type: Boolean,
+    default: false, // Default to false for customers
+  },
 });
 
 const modelName = "customers";

@@ -82,7 +82,7 @@ export const POST = async (req) => {
       userId: existingAccount._id,
       token,
       status: 200,
-      message: "User logged in",
+      isAdmin: existingAccount.isAdmin,
     });
   } catch (error) {
     // Handle unexpected errors

@@ -2,11 +2,10 @@ import { jwtVerify } from "jose"; // Import the specific function you need from 
 import { NextResponse } from "next/server";
 
 export const config = {
-  matcher: ["/api/products", "/api/cart", "/api/cart/:path*"],
+  matcher: ["/api/cart", "/api/cart/:path*"],
 };
 
 export async function middleware(req) {
-  
   try {
     const authorization = req.headers.get("authorization"); // Get the Authorization header
 

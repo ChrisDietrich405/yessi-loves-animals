@@ -3,7 +3,7 @@ import mongoose from "@/lib/mongoose";
 const { Schema } = mongoose;
 
 // Define the schema for a Cart document
-const cartSchema = new Schema({
+const orderSchema = new Schema({
   userId: {
     type: String,
     required: true,
@@ -12,11 +12,15 @@ const cartSchema = new Schema({
     type: [],
     required: true,
   },
+  paymentStatus: {
+    status: ["pending", "paid", "cancel"],
+    required: true,
+  },
 });
-const modelName = "cart";
+const modelName = "orders";
 // Check if the model already exists, if not, create it
 if (!mongoose.models[modelName]) {
-  mongoose.model(modelName, cartSchema);
+  mongoose.model(modelName, orderSchema);
 }
 
 // Export the CartModel

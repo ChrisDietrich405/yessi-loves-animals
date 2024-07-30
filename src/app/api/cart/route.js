@@ -24,7 +24,6 @@ export const GET = async (req) => {
     }
 
     const foundCart = await CartModel.findOne({ userId });
-    console.log(foundCart);
 
     if (!foundCart) {
       return NextResponse.json(
@@ -50,7 +49,7 @@ export const POST = async (req) => {
 
   const body = await req.json();
   const result = await CartModel.create(body);
-  console.log("RESULT", result);
+
   return NextResponse.json({ success: true, data: result }, { status: 201 });
 };
 
@@ -71,30 +70,86 @@ export const DELETE = async (req) => {
 
   // try {
   //   // Parse the request body to extract the item ID
-  const { items } = await req.json();
-  console.log("hello Leticia", items[0].itemId);
+  const { id } = await req.json();
+  // console.log("hello Leticia", items[0].itemId);
 
-  const itemId = items[0].itemId;
+  // const itemId = items[0].itemId;
   // console.log("itemId", itemId);
 
   // Check if itemId is provided
-  if (!itemId) {
+  if (!id) {
     return NextResponse.json(
-      { message: "Item ID is missing in the request body." },
+      { message: "Cart ID is missing in the request body." },
       { status: 400 }
     );
   }
 
-  console.log("hi", itemId);
-  await CartModel.deleteOne(itemId);
+  await CartModel.deleteOne({ _id: id });
 
-  return NextResponse.json({ message: "Item removed successfully." });
-  // Use findOneAndUpdate to update the cart for the user
-  // const result = await CartModel.findOneAndUpdate(
-  //   { userId }, // filter by userId
-  //   { $pull: { items: { _id: itemId } } }, // use $pull to remove an item by _id
-  //   { new: true } // return the updated document
-  // );
+  return NextResponse.json({ message: "Cart removed successfully." });
+
+  //   // Check if the item was removed successfully
+  //   if (!result) {
+  //     return NextResponse.json(
+  //       { message: "Cart item not found or already removed." },
+  //       { status: 404 }
+  //     );
+  //   }
+
+  //   return NextResponse.json({ message: "Item removed successfully." });
+  // } catch (error) {
+  //   console.error("Error removing item from cart:", error);
+  //   return NextResponse.json(
+  //     { message: "Internal server error" },
+  //     { status: 500 }
+  //   );
+  // }
+};
+
+export const PUT = async (req) => {
+  // Extracting the headers from the request
+  const requestHeaders = new Headers(req.headers);
+
+  // Extracting the userId from headers
+  const userId = requestHeaders.get("x-decoded-id");
+
+  // Check if userId is available
+  if (!userId) {
+    return NextResponse.json(
+      { message: "User ID is missing in the headers." },
+      { status: 400 }
+    );
+  }
+
+  // try {
+  //   // Parse the request body to extract the item ID
+  const { items } = await req.json();
+  console.log("hello Leticia", items);
+
+  const updatedCart = await CartModel.findOneAndUpdate(
+    { userId: userId },
+    { $set: { items: items } },
+    { returnOriginal: false }
+  );
+
+  console.log("updatedcart", updatedCart);
+
+  return NextResponse.json({ message: "Item updated successfully." });
+
+  // const itemId = items[0].itemId;
+  // // console.log("itemId", itemId);
+
+  // // Check if itemId is provided
+  // if (!itemId) {
+  //   return NextResponse.json(
+  //     { message: "Item ID is missing in the request body." },
+  //     { status: 400 }
+  //   );
+  // }
+
+  // await CartModel.deleteOne(itemId);
+
+  // return NextResponse.json({ message: "Item removed successfully." });
 
   //   // Check if the item was removed successfully
   //   if (!result) {

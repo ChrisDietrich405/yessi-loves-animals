@@ -12,10 +12,58 @@ const orderSchema = new Schema({
     required: true,
   },
   paymentStatus: {
-    status: ["pending", "paid", "cancel"],
+    type: String,
+    enum: ["pending", "paid", "cancel"],
     required: true,
   },
+  datePurchased: {
+    type: Date,
+    required: true,
+  },
+  totalAmount: {
+    type: Number,
+    required: true,
+    min: 0,
+  },
+  method: {
+    type: String,
+    enum: ['credit_card', 'paypal', 'bank_transfer'],
+    required: true,
+  },
+  transactionId: {
+    type: String,
+    required: true,
+  },
+  // shippingAddress: {
+  //   addressLine1: {
+  //     type: String,
+  //     required: true,
+  //   },
+  //   // addressLine2: String,
+  //   city: {
+  //     type: String,
+  //     required: true,
+  //   },
+  //   state: {
+  //     type: String,
+  //     required: true,
+  //   },
+  //   postalCode: {
+  //     type: String,
+  //     required: true,
+  //   },
+  //   country: {
+  //     type: String,
+  //     required: true,
+  //   },
+  // },
+  updatedAt: {
+    type: Date,
+    default: Date.now,
+  },
+  
 });
+
 const modelName = "orders";
 
 if (!mongoose.models[modelName]) {

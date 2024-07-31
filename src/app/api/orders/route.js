@@ -1,4 +1,4 @@
-import OrdersModel from "../../models/cart";
+import OrdersModel from "../../models/orders";
 import { NextResponse, NextRequest } from "next/server";
 import mongoose from "mongoose";
 
@@ -9,9 +9,9 @@ export const GET = async (req) => {
   // if (!userId) {
   //   return NextResponse.json({ message: "Unauthorized user" }, { status: 401 });
   // }
-  const order = await OrdersModel.findOne({ _id: userId });
+  const order = await OrdersModel.findOne({userId});
 
-  console.log("id", order);
+  return NextResponse.json(order, { status: 200 })
   // Find all orders for the specific user
   // const allOrders = await OrdersModel.find({ userId: id });
   // console.log("allOrders", allOrders);
@@ -42,3 +42,5 @@ export const GET = async (req) => {
   //   return NextResponse.json({ message: error.message }, { status: 500 });
   // }
 };
+
+

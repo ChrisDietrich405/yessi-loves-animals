@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import CustomersModel from "../../models/customers";
+import CustomersModel from "../../models/users";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";

@@ -1,7 +1,7 @@
 import mongoose from "@/lib/mongoose";
 import { Schema, model } from "mongoose";
 
-const customerSchema = new Schema({
+const userSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -25,14 +25,14 @@ const customerSchema = new Schema({
   },
   isAdmin: {
     type: Boolean,
-    default: false, // Default to false for customers
+    default: false,
   },
 });
 
-const modelName = "customers";
+const modelName = "users";
 
 if (!mongoose.models[modelName]) {
-  mongoose.model(modelName, customerSchema);
+  mongoose.model(modelName, userSchema);
 }
 
 export default mongoose.models[modelName];

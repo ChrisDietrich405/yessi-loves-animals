@@ -16,6 +16,11 @@ const orderSchema = new Schema({
     enum: ["pending", "paid", "cancel"],
     required: true,
   },
+  status: {
+    type: String,
+    enum: ["delivered", "return"],
+    required: true,
+  },
   datePurchased: {
     type: Date,
     required: true,
@@ -27,7 +32,7 @@ const orderSchema = new Schema({
   },
   method: {
     type: String,
-    enum: ['credit_card', 'paypal', 'bank_transfer'],
+    enum: ["credit_card", "paypal", "bank_transfer"],
     required: true,
   },
   transactionId: {
@@ -61,7 +66,6 @@ const orderSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-  
 });
 
 const modelName = "orders";

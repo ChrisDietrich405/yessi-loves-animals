@@ -1,15 +1,6 @@
 import CartModel from "../../models/cart";
-import { NextResponse, NextRequest } from "next/server";
-import mongoose from "mongoose";
+import { NextResponse } from "next/server";
 
-
-// export async function GET(req) {
-//   console.log("first"); // Log message to indicate the route handler is executed
-//   return new Response("Hello from the /api/cart route", {
-//     status: 200,
-//     headers: { "Content-Type": "text/plain" },
-//   });
-// }
 export const GET = async (req) => {
   try {
     const requestHeaders = new Headers(req.headers);
@@ -121,18 +112,13 @@ export const PUT = async (req) => {
     );
   }
 
-  // try {
-  //   // Parse the request body to extract the item ID
   const { items } = await req.json();
-  console.log("hello Leticia", items);
 
   const updatedCart = await CartModel.findOneAndUpdate(
     { userId: userId },
     { $set: { items: items } },
     { returnOriginal: false }
   );
-
-  console.log("updatedcart", updatedCart);
 
   return NextResponse.json({ message: "Item updated successfully." });
 

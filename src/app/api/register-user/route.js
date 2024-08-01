@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import CustomersModel from "@/app/models/customers";
+import UsersModel from "@/app/models/users";
 import bcrypt from "bcryptjs";
 
 export async function POST(req) {
@@ -30,7 +30,7 @@ export async function POST(req) {
     );
   }
 
-  const existingEmail = await CustomersModel.findOne({ email });
+  const existingEmail = await UsersModel.findOne({ email });
   if (existingEmail) {
     return NextResponse.json(
       { status: 409, message: "Duplicate email" },
@@ -45,17 +45,18 @@ export async function POST(req) {
     const hashedPassword = await bcrypt.hash(password, salt);
     console.log(hashedPassword);
 
-    const newCustomer = new CustomersModel({
+    const newUser = new UsersModel({
       name,
       streetAddress,
       city,
       email,
       password: hashedPassword,
     });
+    console.log("user", newUser)
 
-    await newCustomer.save();
+    await newUser.save();
 
-    return NextResponse.json({ status: 201, message: "Customer created" });
+    return NextResponse.json({ status: 201, message: "User created" });
   } catch (error) {
     return NextResponse.json(
       { status: 500, message: error.message },

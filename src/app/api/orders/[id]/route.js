@@ -2,6 +2,9 @@ import mongoose from "mongoose";
 import OrdersModel from "../../../models/orders";
 import { NextResponse, NextRequest } from "next/server";
 
+
+//THIS IS FOR BOTH THE USER AND THE ADMIN, BUT TO BE SIMPLE RIGHT NOW WE COULD HAVE A BUTTON THAT SAYS ORDER DETAILS FOR THE CUSTOMER
+
 export const GET = async (req, { params }) => {
   const id = new mongoose.Types.ObjectId(params.id);
 
@@ -17,6 +20,11 @@ export const GET = async (req, { params }) => {
 
   return NextResponse.json(orderDetails, { status: 200 });
 };
+
+
+
+//I SHOULD HAVE TWO PUT METHODS ONE FOR THE CUSTOMER TO CANCEL AND ANOTHER FOR THE ADMIN TO UPDATE TO PAID
+
 
 export const PUT = async (req, { params }) => {
   const id = new mongoose.Types.ObjectId(params.id);

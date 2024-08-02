@@ -6,17 +6,10 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-// function getTokenExpiration(token) {
-//   const decoded = jwt.decode(token);
-//   return typeof decoded === "object" && decoded !== null ? decoded.exp : null;
-// }
-
 export const POST = async (req) => {
-  // try {
   const { email, password } = await req.json();
   console.log(email);
 
-  // Check for missing email or password
   if (!email || !password) {
     return NextResponse.json(
       {
@@ -42,9 +35,7 @@ export const POST = async (req) => {
     );
   }
   try {
-    // Find user in the database
     const existingAccount = await CustomersModel.findOne({ email });
-
     if (!existingAccount) {
       return NextResponse.json(
         { status: 401, message: "Incorrect credentials" },
@@ -75,9 +66,6 @@ export const POST = async (req) => {
       }
     );
 
-    //   // Get token expiration
-    //   const expires = getTokenExpiration(token);
-
     return NextResponse.json({
       userId: existingAccount._id,
       token,
@@ -85,7 +73,6 @@ export const POST = async (req) => {
       isAdmin: existingAccount.isAdmin,
     });
   } catch (error) {
-    // Handle unexpected errors
     return NextResponse.json(
       { status: 500, message: "Internal Server Error" },
       {

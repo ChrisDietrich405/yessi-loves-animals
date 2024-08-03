@@ -3,6 +3,7 @@ import CustomersModel from "../../models/users";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import { handleMongoError } from "@/app/exceptions/handle-mongo-error";
 
 dotenv.config();
 
@@ -73,11 +74,6 @@ export const POST = async (req) => {
       isAdmin: existingAccount.isAdmin,
     });
   } catch (error) {
-    return NextResponse.json(
-      { status: 500, message: "Internal Server Error" },
-      {
-        status: 500,
-      }
-    );
+    return handleMongoError()
   }
 };

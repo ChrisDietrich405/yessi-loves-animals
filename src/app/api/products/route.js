@@ -1,14 +1,14 @@
+import { handleMongoError } from "@/app/exceptions/handle-mongo-error";
 import ProductsModel from "../../models/products";
 import UsersModel from "../../models/users";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 export const GET = async () => {
   try {
     const products = await ProductsModel.find();
     return NextResponse.json(products, { status: 200 });
   } catch (error) {
-    console.log(error);
-    return NextResponse.json({ message: error.message }, { status: 500 });
+    return handleMongoError();
   }
 };
 
@@ -30,9 +30,8 @@ export const POST = async (req) => {
 
     const newProduct = await ProductsModel.create(product);
 
-    return NextResponse.json(newProduct, { status: 200 });
+    return NextResponse.json(newProduct, { status: 201 });
   } catch (error) {
-    console.log(error);
-    return NextResponse.json({ message: error.message }, { status: 500 });
+    return handleMongoError();
   }
 };

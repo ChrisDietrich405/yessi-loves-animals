@@ -14,15 +14,22 @@ const productSchema = new Schema({
     type: Number,
     required: true,
   },
-
-  // description: {
-  //   type: String,
-  //   required: true,
-  // },
-  // price: {
-  //   type: Number,
-  //   required: true,
-  // },
+  images: {
+    type: [],
+    required: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now,
+  },
   // category: {
   //   type: String,
   //   required: true,
@@ -39,23 +46,14 @@ const productSchema = new Schema({
   //   type: String,
   //   required: false,
   // },
-  // createdAt: {
-  //   type: Date,
-  //   default: Date.now,
-  // },
-  // updatedAt: {
-  //   type: Date,
-  //   default: Date.now,
-  // }
 });
 
-// Model name
 const modelName = "products";
 
-// Check if the model already exists to avoid overwriting it
 if (!mongoose.models[modelName]) {
   mongoose.model(modelName, productSchema);
 }
 
-// Export the model
 export default mongoose.models[modelName];
+
+

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import UsersModel from "@/app/models/users";
 import bcrypt from "bcryptjs";
+import { handleMongoError } from "@/app/exceptions/handle-mongo-error";
 
 export async function POST(req) {
   const { name, streetAddress, city, email, password } = await req.json();
@@ -52,19 +53,12 @@ export async function POST(req) {
       email,
       password: hashedPassword,
     });
-    console.log("user", newUser)
+    console.log("user", newUser);
 
     await newUser.save();
 
     return NextResponse.json({ status: 201, message: "User created" });
   } catch (error) {
-    return NextResponse.json(
-      { status: 500, message: error.message },
-      {
-        status: 500,
-      }
-    );
+    return handleMongoError();
   }
 }
-
-

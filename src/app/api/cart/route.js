@@ -4,18 +4,15 @@ import { NextResponse } from "next/server";
 //THIS WOULD BE THE CART ICON BUTTON
 
 export const GET = async (req) => {
+  const requestHeaders = new Headers(req.headers);
+
+  const userId = requestHeaders.get("x-decoded-id");
+
+  if (!userId || userId === "undefined") {
+    return NextResponse.json({ message: "Unauthorized user" }, { status: 401 });
+  }
+
   try {
-    const requestHeaders = new Headers(req.headers);
-
-    const userId = requestHeaders.get("x-decoded-id");
-
-    if (!userId || userId === "undefined") {
-      return NextResponse.json(
-        { message: "Unauthorized user" },
-        { status: 401 }
-      );
-    }
-
     const foundCart = await CartModel.findOne({ userId });
 
     if (!foundCart) {
@@ -31,205 +28,88 @@ export const GET = async (req) => {
   }
 };
 
-//THIS IS TO CREATE A CART OR IF THE CART ALREADY EXISTS TO UPDATE IT (THE POST METHOD CAN DO BOTH)
-//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!I NEED TO ADD FUNCTIONALITY TO ADD A MORE THAN ONE ITEM TO THIS CART
-
-// export const POST = async (req) => {
-
-//   const requestHeaders = new Headers(req.headers);
-
-//   const userId = requestHeaders.get("x-decoded-id");
-
-//   if (!userId) {
-//     return NextResponse.json({ message: "Unauthorized user" }, { status: 401 });
-//   }
-
-//   const previousCart = await CartModel.findOne({ userId: userId });
-
-//   //this logic is to replace the first item in the cart with another item
-//   const body = await req.json();
-//   let result;
-//   if (!previousCart) {
-//     result = await CartModel.create(body);
-//   } else {
-//     result = await CartModel.findOneAndUpdate(
-//       { userId: userId },
-//       { $set: { items: body.items } },
-//       { returnOriginal: false }
-//     );
-//   }
-
-//   return NextResponse.json({ success: true, data: result }, { status: 201 });
-// };
-
-// export const POST = async (req) => {
-//   const requestHeaders = new Headers(req.headers);
-
-//   const userId = requestHeaders.get("x-decoded-id");
-//   console.log(userId);
-
-//   // if (!userId) {
-//   //   return NextResponse.json({ message: "Unauthorized user" }, { status: 401 });
-//   // }
-
-//   const previousCart = await CartModel.findOne({ userId });
-
-//   const updatedCartItems = previousCart.items.map((item) => {
-//     const existingItem = previousCart.items.find(
-//       (newItem) => newItem.productId === item.productId
-//     );
-//     if (existingItem) {
-//       return {
-//         ...item,
-//         quantity: item.quantity + existingItem.quantity,
-//         price: item.price + existingItem.price * existingItem.quantity,
-//       };
-//     }
-//     return item;
-//   });
-
-//   const newItems = updatedCartItems.items.filter(
-//     (newItem) =>
-//       !previousCart.items.some((item) => newItem.productId === item.productId)
-//   );
-
-//   console.log(newItems);
-
-//   // const combinedItems = [...updatedCartItems, ...newItems];
-
-//   // result = await CartModel.findOneAndUpdate(
-//   //   { userId: userId },
-//   //   { $set: { items: combinedItems } },
-//   //   { returnOriginal: false }
-//   // );
-
-//   //this logic is to replace the first item in the cart with another item
-//   // const body = await req.json();
-//   // let result;
-//   // if (!previousCart) {
-//   //   result = await CartModel.create(body);
-//   // } else {
-//   //   result = await CartModel.findOneAndUpdate(
-//   //     { userId: userId },
-//   //     { $set: { items: body.items } },
-//   //     { returnOriginal: false }
-//   //   );
-//   // }
-
-//   // const body = await req.json();
-//   // let result;
-//   // if (!previousCart) {
-//   //   result = await CartModel.create(body);
-//   // } else {
-//   //   result = await CartModel.findOneAndUpdate(
-//   //     { userId: userId },
-//   //     { $set: { items: body.items } },
-//   //     { returnOriginal: false }
-//   //   );
-//   // }
-//   // console.log("hello", result);
-
-//   return NextResponse.json({ success: true, data: result }, { status: 201 });
-// };
-
 export const POST = async (req) => {
   const requestHeaders = new Headers(req.headers);
 
   const userId = requestHeaders.get("x-decoded-id");
 
-  const previousCart = await CartModel.findOne({ userId });
-
-  const body = await req.json();
-  const newItems = body.items;
-
-  if (!previousCart) {
-    const result = await CartModel.create({ userId, items: newItems });
-    return NextResponse.json({ success: true, data: result }, { status: 201 });
+  if (!userId) {
+    return NextResponse.json({ message: "Unauthorized user" }, { status: 401 });
   }
 
-  const updatedItemsMap = new Map();
+  try {
+    const previousCart = await CartModel.findOne({ userId });
 
-  previousCart.items.forEach((item) => {
-    updatedItemsMap.set(item.productId, { ...item });
-  });
+    const body = await req.json();
+    const newItems = body.items;
 
-  newItems.forEach((newItem) => {
-    const existingItem = updatedItemsMap.get(newItem.productId);
-    if (existingItem) {
-      existingItem.quantity += newItem.quantity;
-      existingItem.price += newItem.price * newItem.quantity;
-    } else {
-      updatedItemsMap.set(newItem.productId, { ...newItem });
+    if (!previousCart) {
+      const result = await CartModel.create({ userId, items: newItems });
+      return NextResponse.json(
+        { success: true, data: result },
+        { status: 201 }
+      );
     }
-  });
 
-  const combinedItems = Array.from(updatedItemsMap.values());
+    const updatedItemsMap = new Map();
 
-  const result = await CartModel.findOneAndUpdate(
-    { userId },
-    { $set: { items: combinedItems } },
-    { returnOriginal: false, new: true }
-  );
+    previousCart.items.forEach((item) => {
+      updatedItemsMap.set(item.productId, { ...item });
+    });
 
-  return NextResponse.json({ success: true, data: result }, { status: 201 });
+    newItems.forEach((newItem) => {
+      const existingItem = updatedItemsMap.get(newItem.productId);
+      if (existingItem) {
+        existingItem.quantity += newItem.quantity;
+        existingItem.price += newItem.price * newItem.quantity;
+      } else {
+        updatedItemsMap.set(newItem.productId, { ...newItem });
+      }
+    });
+
+    const combinedItems = Array.from(updatedItemsMap.values());
+
+    const result = await CartModel.findOneAndUpdate(
+      { userId },
+      { $set: { items: combinedItems } },
+      { returnOriginal: false, new: true }
+    );
+
+    return NextResponse.json({ success: true, data: result }, { status: 201 });
+  } catch (error) {
+    return NextResponse.json(
+      { message: "Internal server error" },
+      { status: 500 }
+    );
+  }
 };
 
-
+//HOW AM I UPDATING THE CART (DELETING ITEMS, UPDATING QUANTITY, SHOuld this function be a dynamic route)
 
 export const PUT = async (req) => {
-  // Extracting the headers from the request
   const requestHeaders = new Headers(req.headers);
 
-  // Extracting the userId from headers
   const userId = requestHeaders.get("x-decoded-id");
 
-  // Check if userId is available
   if (!userId) {
-    return NextResponse.json(
-      { message: "User ID is missing in the headers." },
-      { status: 400 }
-    );
+    return NextResponse.json({ message: "Unauthorized user" }, { status: 400 });
   }
 
   const { items } = await req.json();
+  try {
+    const updatedCart = await CartModel.findOneAndUpdate(
+      { userId: userId },
+      { $set: { items: items } },
+      { returnOriginal: false }
+    );
 
-  const updatedCart = await CartModel.findOneAndUpdate(
-    { userId: userId },
-    { $set: { items: items } },
-    { returnOriginal: false }
-  );
-
-  return NextResponse.json({ message: "Item updated successfully." });
-
-  // const itemId = items[0].itemId;
-  // // console.log("itemId", itemId);
-
-  // // Check if itemId is provided
-  // if (!itemId) {
-  //   return NextResponse.json(
-  //     { message: "Item ID is missing in the request body." },
-  //     { status: 400 }
-  //   );
-  // }
-
-  // await CartModel.deleteOne(itemId);
-
-  // return NextResponse.json({ message: "Item removed successfully." });
-
-  //   // Check if the item was removed successfully
-  //   if (!result) {
-  //     return NextResponse.json(
-  //       { message: "Cart item not found or already removed." },
-  //       { status: 404 }
-  //     );
-  //   }
-
-  //   return NextResponse.json({ message: "Item removed successfully." });
-  // } catch (error) {
-  //   console.error("Error removing item from cart:", error);
-  //   return NextResponse.json(
-  //     { message: "Internal server error" },
-  //     { status: 500 }
-  //   );
-  // }
+    return NextResponse.json({
+      items: updatedCart,
+    });
+  } catch (error) {
+    return NextResponse.json(
+      { message: "Internal server error" },
+      { status: 500 }
+    );
+  }
 };

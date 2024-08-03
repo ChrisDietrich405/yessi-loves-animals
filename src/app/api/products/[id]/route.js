@@ -36,7 +36,6 @@ export async function PUT(req, { params }) {
     const userId = requestHeaders.get("x-decoded-id");
 
     const user = await UsersModel.findOne({ _id: userId });
-    console.log("hello David", user);
 
     if (!user.isAdmin) {
       return NextResponse.json(

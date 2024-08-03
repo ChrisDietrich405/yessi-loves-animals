@@ -2,17 +2,13 @@ import OrdersModel from "../../models/orders";
 import { NextResponse, NextRequest } from "next/server";
 import mongoose from "mongoose";
 
-//WHAT'S THE USE OF THIS METHOD
-
 //THE FUNCTION BELOW IS FOR WHEN A USER CLICKS A BUTTON TO SEE ALL THEIR ORDERS
 
 export const GET = async (req) => {
   const requestHeaders = new Headers(req.headers);
   const userId = requestHeaders.get("x-decoded-id");
 
-  // if (!userId) {
-  //   return NextResponse.json({ message: "Unauthorized user" }, { status: 401 });
-  // }
+
   const orders = await OrdersModel.find({ userId });
 
   return NextResponse.json(orders, { status: 200 });

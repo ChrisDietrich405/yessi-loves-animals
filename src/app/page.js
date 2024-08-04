@@ -6,7 +6,6 @@ import styles from "./page.module.css";
 export default function Home() {
   return (
     <div sx={{ backgroundColor: "#282c34" }}>
-      <Navbar />
       <Container sx={{ margin: "40px" }}>
         <Grid container mt={2} spacing={{ xs: 0, md: 4 }}>
           <Grid item xs={12} md={4} style={{ alignItems: "right" }}>

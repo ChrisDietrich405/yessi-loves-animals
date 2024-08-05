@@ -17,10 +17,7 @@ export const DELETE = async (req, { params }) => {
 
     return NextResponse.json({ message: "removed" });
   } catch (error) {
-    return NextResponse.json(
-      { message: "Internal server error" },
-      { status: 500 }
-    );
+    return handleMongoError();
   }
 };
 
@@ -40,9 +37,6 @@ export const PUT = async (req) => {
 
     return NextResponse.json({ status: 200, data: foundCart });
   } catch (error) {
-    return NextResponse.json(
-      { status: 500, message: "Internal server error" },
-      { status: 500 }
-    );
+    return handleMongoError();
   }
 };

@@ -24,7 +24,7 @@ export const GET = async (req) => {
 
     return NextResponse.json(foundCart, { status: 200 });
   } catch (error) {
-    return NextResponse.json({ message: error.message }, { status: 500 });
+    return handleMongoError();
   }
 };
 
@@ -77,10 +77,7 @@ export const POST = async (req) => {
 
     return NextResponse.json({ success: true, data: result }, { status: 201 });
   } catch (error) {
-    return NextResponse.json(
-      { message: "Internal server error" },
-      { status: 500 }
-    );
+    return handleMongoError();
   }
 };
 
@@ -107,9 +104,6 @@ export const PUT = async (req) => {
       items: updatedCart,
     });
   } catch (error) {
-    return NextResponse.json(
-      { message: "Internal server error" },
-      { status: 500 }
-    );
+    return handleMongoError();
   }
 };

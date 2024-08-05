@@ -21,6 +21,6 @@ export const PUT = async (req) => {
 
     return NextResponse.json({ message: "Cart cleared" }, { status: 200 });
   } catch (error) {
-    return NextResponse.json({ message: "Server error" }, { status: 500 });
+    return handleMongoError();
   }
 };

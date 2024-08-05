@@ -63,13 +63,11 @@ export async function POST(req) {
       email,
       password: hashedPassword,
     });
-    console.log("user", newUser);
 
     await newUser.save();
 
     return NextResponse.json({ status: 201, message: "User created" });
   } catch (error) {
-    console.log(error);
     return handleMongoError();
   }
 }

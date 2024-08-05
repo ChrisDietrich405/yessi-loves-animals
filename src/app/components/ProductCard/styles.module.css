@@ -12,18 +12,8 @@
   border-radius: 16px;
 }
 
-/* button {
-  font-weight: 600;
-  font-size: 0.9rem;
-}
-
-button:hover {
-  font-size: 0.95rem;
-  transition: 0.3s;
-  border-color: rgba(0, 0, 0, 0.4);
-} */
-
 .product_container_img {
+  margin-right: 20px;
   max-width: 150px;
   max-height: 200px;
 }

@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import styles from "./styles.module.css";
-import { Button, Container, Typography } from "@mui/material";
+import { Button, Container, Typography, Box } from "@mui/material";
 
 const ProductCard = ({ id, image, price, description, title }) => {
   const router = useRouter();
@@ -30,9 +30,11 @@ const ProductCard = ({ id, image, price, description, title }) => {
       <Typography sx={{ color: "black", marginTop: "10px" }} variant="p">
         {title}
       </Typography>
-      <div>
+      <Box>
         {/* <Link href={`/products/${id}`}>Details</Link> */}
-        <p>{formatter.format(price)}</p>
+        <Typography sx={{ color: "black", margin: "5px 0" }}>
+          {formatter.format(price)}
+        </Typography>
         <Button
           variant="contained"
           sx={{
@@ -46,7 +48,7 @@ const ProductCard = ({ id, image, price, description, title }) => {
         >
           Details
         </Button>
-      </div>
+      </Box>
     </Container>
   );
 };

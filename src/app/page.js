@@ -1,19 +1,30 @@
+import Image from "next/image";
 import { Box, Container, Grid, Typography } from "@mui/material";
 import ImageList from "./components/ImageList";
-import Navbar from "./components/Navbar";
 import styles from "./page.module.css";
 
 export default function Home() {
   return (
-    <div sx={{ backgroundColor: "#282c34" }}>
+    <Box sx={{ backgroundColor: "#282c34" }}>
       <Container sx={{ margin: "40px" }}>
-        <Grid container mt={2} spacing={{ xs: 0, md: 4 }}>
-          <Grid item xs={12} md={4} style={{ alignItems: "right" }}>
-            {" "}
-            <img
-              className={styles.yessi_picture}
-              src="../img/yessi1.jpg"
-              alt="practice"
+        <Grid
+          container
+          mt={2}
+          spacing={{ xs: 0, md: 4 }}
+          sx={{ justifyContent: "space-around" }}
+        >
+          <Grid
+            item
+            xs={12}
+            md={4}
+            sx={{ display: "flex", justifyContent: "center" }}
+          >
+            <Image
+              width={400}
+              height={500}
+              className={styles.product_container_img}
+              src="/img/yessi1.jpg"
+              alt="Owner of an animal sanctuary holding her chicken."
             />
           </Grid>
           <Grid
@@ -31,8 +42,7 @@ export default function Home() {
               fontSize="32px"
               style={{
                 textAlign: "left",
-                marginTop: "40px",
-                marginBottom: "20px",
+                margin: "40px 0px 20px 20px",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
@@ -67,14 +77,14 @@ export default function Home() {
             justifyContent: "center",
           }}
         >
-          <div className={styles.image_list_wrapper}>
+          <Box className={styles.image_list_wrapper}>
             <ImageList sx={{ display: "flex", justifyContent: "center" }} />
-          </div>
+          </Box>
         </Box>
         <Typography fontSize="32px" sx={{ textAlign: "center" }} mt={"24px"}>
           “Blessed are the merciful, for they will receive mercy.” —Matthew 5:7
         </Typography>
       </Container>
-    </div>
+    </Box>
   );
 }

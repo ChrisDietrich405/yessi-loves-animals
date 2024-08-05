@@ -36,13 +36,13 @@ const ProductList = () => {
       <CircularIndeterminate />
     </Box>
   ) : (
-    <div className={styles.product_list_container}>
-      <div className={styles.product_container}>
+    <Box className={styles.product_list_container}>
+      <Box className={styles.product_container}>
         {products.map((productItem) => {
           return <ProductCard key={productItem.id} {...productItem} />;
         })}
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
 

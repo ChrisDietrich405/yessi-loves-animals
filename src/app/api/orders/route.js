@@ -47,15 +47,16 @@ export const PATCH = async (req) => {
     return NextResponse.json({ message: "Unauthorized user" }, { status: 401 });
   }
 
-  try{
+  try {
     let order = await OrdersModel.findOne({ userId });
     order.paymentStatus = "cancel";
     console.log(order);
     await order.save();
-  
+
     return NextResponse.json({ message: "success" }, { status: 201 });
-  }catch() {
-
+  } catch (error) {
+    return handleMongoError();
   }
-
 };
+
+

@@ -30,7 +30,6 @@ export const GET = async (req, { params }) => {
 };
 
 export async function PUT(req, { params }) {
-  try {
     const requestHeaders = new Headers(req.headers);
     const userId = requestHeaders.get("x-decoded-id");
     const user = await UsersModel.findOne({ _id: userId });
@@ -45,7 +44,7 @@ export async function PUT(req, { params }) {
     const productBody = await req.json();
     console.log("body ", productBody);
 
-    // try {
+    try {
     const updatedProduct = await ProductsModel.findOneAndUpdate(
       { _id: params.id },
       { $set: productBody },

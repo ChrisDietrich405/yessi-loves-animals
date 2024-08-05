@@ -32,15 +32,17 @@ export const PUT = async (req, { params }) => {
 
   const userId = requestHeaders.get("x-decoded-id");
 
-  const currentOrder = await OrdersModel.findOne({ userId });
-  console.log("hello", currentOrder);
-
-  if (userId !== currentOrder.userId) {
-    return NextResponse.json({ message: "Unauthorized user" }, { status: 401 });
-  }
-
-  const body = await req.json();
   try {
+    const currentOrder = await OrdersModel.findOne({ userId });
+    console.log("hello", currentOrder);
+
+    if (currentOrder.userId !== userId) {
+      // return NextResponse.json({ message: "Unauthorized user" }, { status: 401 });
+      return false;
+    }
+
+    const body = await req.json();
+
     const updatedProduct = await OrdersModel.findOneAndUpdate(
       { _id: id },
       body,

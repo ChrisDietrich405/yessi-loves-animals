@@ -1,11 +1,15 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { Button, Chip } from "@mui/material";
 
 import styles from "./styles.module.css";
 
 const Cart = () => {
   const [cartProducts, setCartProducts] = useState([]);
   const [cartTotal, setCartTotal] = useState({});
+
+  const router = useRouter();
 
   const updateCartTotal = () => {
     setCartTotal(
@@ -64,8 +68,27 @@ const Cart = () => {
     <div className={styles.cart_container}>
       <div className={styles.cart_summary_container}>
         <h3>Cart Summary</h3>
-        <p>Total: {cartTotal.totalItems}</p>
-        <p>Total Price: ${cartTotal.totalPrice?.toFixed(2)}</p>
+        <br />
+        <p>
+          <b>Total:</b> {cartTotal.totalItems}
+        </p>
+        <p sx={{ paddingBottom: "30px" }}>
+          <b> Total Price:</b> ${cartTotal.totalPrice?.toFixed(2)}
+        </p>
+        <Button
+          sx={{
+            marginTop: "auto",
+            backgroundColor: "#636366",
+            color: "#FFFFFF", // Text color
+            "&:hover": {
+              backgroundColor: "#282c35", // Hover color
+            },
+          }}
+          variant="contained"
+          onClick={() => router.push("/products")}
+        >
+          Back to Products
+        </Button>
       </div>
       <ul className={styles.list_container}>
         {cartProducts.map((product) => {
@@ -77,9 +100,33 @@ const Cart = () => {
                 <strong>${product.price}</strong>
                 <p>
                   Total:{" "}
-                  <button onClick={() => subtractItem(product.id)}>-</button>{" "}
+                  <Chip
+                    sx={{
+                      backgroundColor: "#636366",
+                      color: "#FFFFFF", // Text color
+                      "&:hover": {
+                        backgroundColor: "#282c35", // Hover color
+                      },
+                    }}
+                    label="-"
+                    onClick={() => subtractItem(product.id)}
+                  >
+                    -
+                  </Chip>{" "}
                   {product.total}{" "}
-                  <button onClick={() => addItem(product.id)}>+</button>
+                  <Chip
+                    sx={{
+                      backgroundColor: "#636366",
+                      color: "#FFFFFF", // Text color
+                      "&:hover": {
+                        backgroundColor: "#282c35", // Hover color
+                      },
+                    }}
+                    label="+"
+                    onClick={() => addItem(product.id)}
+                  >
+                    +
+                  </Chip>
                 </p>
               </div>
             </div>

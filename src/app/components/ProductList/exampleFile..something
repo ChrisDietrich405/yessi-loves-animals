@@ -1,8 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
-import CircularIndeterminate from "../Loader";
+import CircularIndeterminate from "../Loader"; // Assuming this is your loading spinner component
 import { api } from "../../api/product-api";
-import { Button, Container, Typography, Box } from "@mui/material";
 
 import ProductCard from "../ProductCard";
 
@@ -14,27 +13,22 @@ const ProductList = () => {
 
   const fetchProducts = async () => {
     setLoading(true);
-    const response = await api.get("products");
-    const { data } = response;
-    setProducts(data);
-    setLoading(false);
+
+    // Simulate a delay using setTimeout
+    setTimeout(async () => {
+      const response = await api.get("products");
+      const { data } = response;
+      setProducts(data);
+      setLoading(false);
+    }, 2000); // 2000ms delay (2 seconds)
   };
+
   useEffect(() => {
     fetchProducts();
   }, []);
 
   return loading ? (
-    <Box
-      sx={{
-        width: "100vw",
-        height: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <CircularIndeterminate />
-    </Box>
+    <CircularIndeterminate />
   ) : (
     <div className={styles.product_list_container}>
       <div className={styles.product_container}>

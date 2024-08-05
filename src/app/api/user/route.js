@@ -6,7 +6,15 @@ import { handleMongoError } from "@/app/exceptions/handle-mongo-error";
 export async function POST(req) {
   const { name, streetAddress, city, state, zipCode, email, password } =
     await req.json();
-  if (!name || !streetAddress || !city || !state || !zipCode || !email || !password) {
+  if (
+    !name ||
+    !streetAddress ||
+    !city ||
+    !state ||
+    !zipCode ||
+    !email ||
+    !password
+  ) {
     return NextResponse.json(
       {
         status: 400,
@@ -45,7 +53,7 @@ export async function POST(req) {
   try {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
-    
+
     const newUser = new UsersModel({
       name,
       streetAddress,
@@ -56,12 +64,35 @@ export async function POST(req) {
       password: hashedPassword,
     });
     console.log("user", newUser);
-    
+
     await newUser.save();
 
     return NextResponse.json({ status: 201, message: "User created" });
   } catch (error) {
     console.log(error);
+    return handleMongoError();
+  }
+}
+
+export async function PUT(req) {
+  const requestHeaders = new Headers(req.headers);
+  const userId = requestHeaders.get("x-decoded-id");
+  const user = await UsersModel.findOne({ _id: userId });
+
+  const userBody = await req.json();
+
+  try {
+    const updatedUser = await UsersModel.findOneAndUpdate(
+      { _id: userId },
+      { $set: userBody },
+      { new: true, useFindAndModify: false } // 'new' returns the modified document
+    );
+    console.log("body ", updatedUser);
+
+    return NextResponse.json(updatedUser, {
+      status: 200,
+    });
+  } catch (error) {
     return handleMongoError();
   }
 }

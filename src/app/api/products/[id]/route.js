@@ -36,17 +36,26 @@ export async function PUT(req, { params }) {
     const user = await UsersModel.findOne({ _id: userId });
 
     if (!user.isAdmin) {
-      return NextResponse.json({ message: "Unauthorized user" }, { status: 401 });
+      return NextResponse.json(
+        { message: "Unauthorized user" },
+        { status: 401 }
+      );
     }
 
-    const id = new mongoose.Types.ObjectId(params.id);
     const productBody = await req.json();
-    await ProductsModel.updateOne(productBody);
-    const updatedProduct = await ProductsModel.findOne({ _id: id });
+    console.log("body ", productBody);
+
+    // try {
+    const updatedProduct = await ProductsModel.findOneAndUpdate(
+      { _id: params.id },
+      { $set: productBody },
+      { new: true, useFindAndModify: false } // 'new' returns the modified document
+    );
 
     return NextResponse.json(updatedProduct, {
       status: 200,
     });
+    return null;
   } catch (error) {
     return handleMongoError();
   }

@@ -4,8 +4,9 @@ import bcrypt from "bcryptjs";
 import { handleMongoError } from "@/app/exceptions/handle-mongo-error";
 
 export async function POST(req) {
-  const { name, streetAddress, city, email, password } = await req.json();
-  if (!name || !streetAddress || !city || !email || !password) {
+  const { name, streetAddress, city, state, zipCode, email, password } =
+    await req.json();
+  if (!name || !streetAddress || !city || !state || !zipCode || !email || !password) {
     return NextResponse.json(
       {
         status: 400,
@@ -44,21 +45,23 @@ export async function POST(req) {
   try {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
-    console.log(hashedPassword);
-
+    
     const newUser = new UsersModel({
       name,
       streetAddress,
       city,
+      state,
+      zipCode,
       email,
       password: hashedPassword,
     });
     console.log("user", newUser);
-
+    
     await newUser.save();
 
     return NextResponse.json({ status: 201, message: "User created" });
   } catch (error) {
+    console.log(error);
     return handleMongoError();
   }
 }

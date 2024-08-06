@@ -11,139 +11,209 @@ body.active-modal {
 
 .modal,
 .overlay {
-  margin-top: 80px; /* Keeps space for any fixed header */
-  width: 30vw; /* Adjust the width as needed for your design */
-  height: calc(100vh - 80px); /* Adjust height considering margin-top */
+  /* Set margin-top for a fixed header */
+  margin-top: 80px;
+  /* Fixed width for the modal */
+  width: 30vw;
+  /* Calculated height excluding the header */
+  height: calc(100vh - 80px);
+  /* Align the modal to the top */
   top: 0;
-  right: 0; /* Aligns the modal to the right */
+  /* Move the modal to the far right */
+  right: 0;
+  /* Fix the position of the modal */
   position: fixed;
-  background-color: white; /* Add a background color to distinguish the modal */
-  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2); /* Optional: Add a subtle shadow for depth */
-  z-index: 1000; /* Ensure it's above other content */
-  overflow-y: auto; /* Enable scrolling for content that overflows vertically */
-  border-left: 1px solid #ccc; /* Optional: Add a border for a clearer separation */
+  /* Add a background color for distinction */
+  background-color: white;
+  /* Add shadow for a subtle depth */
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+  /* Ensure it's above other content */
+  z-index: 1000;
+  /* Enable scrolling for content overflow */
+  overflow-y: auto;
+  /* Optional border for separation */
+  border-left: 1px solid #ccc;
 }
 
-/* Additional styles for the overlay if needed */
+/* Overlay styles */
 .overlay {
-  background-color: rgba(0, 0, 0, 0.5); /* Optional: Add a semi-transparent background */
-  width: 100vw; /* Ensure overlay covers the full screen width */
-  height: 100vh; /* Ensure overlay covers the full screen height */
-  z-index: 999; /* Make sure the overlay is behind the modal */
+  /* Semi-transparent background */
+  background-color: rgba(0, 0, 0, 0.5);
+  /* Ensure overlay covers the full width */
+  width: 100vw;
+  /* Ensure overlay covers the full height */
+  height: 100vh;
+  /* Make sure the overlay is behind the modal */
+  z-index: 999;
 }
 
-
-/* .overlay {
-  background: rgba(49, 49, 49, 0.8);
-} */
 .modal_content {
+  /* Align content to the top right */
   position: absolute;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: 0;
+  right: 0;
+  /* Remove horizontal translation */
+  transform: none;
+  /* Set line-height */
   line-height: 1.4;
+  /* Background color */
   background: #f1f1f1;
+  /* Padding for the content */
   padding: 14px 28px;
+  /* Border radius for rounded corners */
   border-radius: 3px;
+  /* Max width constraint */
   max-width: 600px;
+  /* Min width constraint */
   min-width: 300px;
 }
 
 .close_modal {
+  /* Position the close button */
   position: absolute;
   top: 10px;
   right: 10px;
+  /* Padding for the close button */
   padding: 5px 7px;
 }
 
 .cart_container {
+  /* Flexbox layout for cart container */
   display: flex;
+  /* Space items between */
   justify-content: space-between;
+  /* Full viewport height minus header */
   height: calc(100vh - 75px);
 }
 
 .list_container {
+  /* Set width of list container */
   width: 50vw;
+  /* Flexbox layout */
   display: flex;
+  /* Arrange items in a column */
   flex-direction: column;
 }
 
 .product_container {
+  /* Set width of product container */
   width: 38vw;
+  /* Flexbox layout */
   display: flex;
+  /* Background color */
   background: white;
+  /* Center items vertically */
   align-items: center;
+  /* Margin between products */
   margin: 30px;
+  /* Padding inside the container */
   padding: 20px;
+  /* Border styling */
   border: 1px solid #000;
+  /* Rounded corners */
   border-radius: 7px;
+  /* Box shadow for depth */
   box-shadow: 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 .product_container img {
+  /* Max width for product images */
   max-width: 15vw;
 }
 
 .product_information_container {
+  /* Set text color */
   color: black !important;
+  /* Set height */
   height: 20vh;
+  /* Flexbox layout */
   display: flex;
+  /* Arrange items in a column */
   flex-direction: column;
-  /* justify-content: space-between; */
+  /* Align items to the start */
   align-items: flex-start;
+  /* Padding from the left */
   padding-left: 15px;
 }
 
 .product_information_container h4 {
+  /* Remove margin */
   margin: 0 0 7px 0;
+  /* Remove padding */
   padding: 0;
 }
 
 .product_information_container p {
+  /* Margin for paragraphs */
   margin: 7px 0 7px 0;
+  /* Remove padding */
   padding: 0;
 }
 
 .cart_summary_container {
+  /* Flexbox layout for summary */
   display: flex;
+  /* Arrange items in a column */
   flex-direction: column;
-  height: 100%; /* Certifique-se de que a div pai tenha altura definida */
+  /* Full height of the container */
+  height: 100%;
+  /* Set text color */
   color: black !important;
+  /* Fixed position to the right */
   position: fixed;
   right: 0px;
+  /* Set height */
   height: 40vh;
+  /* Background color */
   background: white;
+  /* Set width */
   width: 30vw;
+  /* Margin around the container */
   margin: 30px;
+  /* Padding inside the container */
   padding: 40px 20px 20px 20px;
+  /* Border styling */
   border: 1px solid #000;
+  /* Rounded corners */
   border-radius: 7px;
+  /* Box shadow for depth */
   box-shadow: 1px 3px rgba(0, 0, 0, 0.2);
 }
 
+/* Media query for mobile devices */
 @media (max-width: 480px) {
   .cart_container {
+    /* Flexbox layout */
     display: flex;
+    /* Arrange items in a column */
     flex-direction: column;
+    /* Center items */
     align-items: center;
   }
 
   .cart_summary_container {
+    /* Remove fixed position */
     position: static;
+    /* Set width */
     width: 80%;
   }
 
   .cart_summary_container button {
+    /* Margin at the bottom for buttons */
     margin-bottom: 20px;
   }
 
   .list_container {
+    /* Center items */
     align-items: center;
+    /* Set width */
     width: 80%;
+    /* Remove padding */
     padding: 0;
   }
 
   .product_container {
+    /* Full width of container */
     width: 100%;
   }
 }

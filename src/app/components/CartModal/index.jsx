@@ -1,10 +1,17 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Button, Chip } from "@mui/material";
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
+import Typography from "@mui/material/Typography";
+
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import CloseIcon from "@mui/icons-material/Close";
+
 import styles from "./styles.module.css";
 
-export default function Modal() {
+export default function ShoppingCartModal({ open, handleClose }) {
   const [modal, setModal] = useState(false);
   const [cartProducts, setCartProducts] = useState([]);
   const [cartTotal, setCartTotal] = useState({});
@@ -64,25 +71,15 @@ export default function Modal() {
     updateCartTotal();
   }, [cartProducts]);
 
-  const toggleModal = () => {
-    setModal(!modal);
-  };
-
-  if (modal) {
-    document.body.classList.add("active_modal");
-  } else {
-    document.body.classList.remove("active_modal");
-  }
-
   return (
-    <>
-      <button onClick={toggleModal} className={styles.btn_modal}>
-        Open
-      </button>
-
-      {modal && (
-        <div className={styles.modal}>
-          <div onClick={toggleModal} className={styles.overlay}></div>
+    <Modal
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="modal-title"
+      aria-describedby="modal-description"
+    >
+      <div className={styles.modal}>
+        <div className={styles.overlay}>
           <div className={styles.modal_content}>
             <div className={styles.cart_container}>
               <div className={styles.cart_summary_container}>
@@ -153,12 +150,12 @@ export default function Modal() {
                 })}
               </ul>
             </div>
-            <button className={styles.close_modal} onClick={toggleModal}>
-              CLOSE
-            </button>
           </div>
+          {/* <button className={styles.close_modal} onClick={toggleModal}>
+            CLOSE
+            </button> */}
         </div>
-      )}
-    </>
+      </div>
+    </Modal>
   );
 }

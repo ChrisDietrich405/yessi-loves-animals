@@ -1,7 +1,7 @@
 //clothes
 "use client";
-import { useContext } from "react";
-import UserContext from "../../context/UserContext";
+import { useContext, useState } from "react";
+import { UserContext } from "../../context/UserContext";
 import Link from "next/link";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import AppBar from "@mui/material/AppBar";
@@ -10,13 +10,18 @@ import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Image from "next/image";
+import CartModal from "../CartModal";
 
 import styles from "./style.module.css";
 
 export default function ButtonAppBar() {
-  // const { modal } = useContext(UserContext);
+  // const { toggleModal, modal } = useContext(UserContext);
 
-  // {modal}
+  const [modal, setModal] = useState(false);
+
+  const toggleModal = () => {
+    setModal(!modal);
+  };
 
   return (
     <Box>
@@ -64,10 +69,14 @@ export default function ButtonAppBar() {
                 Products
               </Button>
             </Link>
-            <ShoppingCartIcon />
+            <ShoppingCartIcon
+              onClick={toggleModal}
+              sx={{ cursor: "pointer" }}
+            />
           </Box>
         </Toolbar>
       </AppBar>
+      <CartModal open={modal} handleClose={toggleModal} />
     </Box>
   );
 }

@@ -9,6 +9,12 @@ const UserProvider = ({ children }) => {
   const toggleModal = () => {
     setModal(!modal);
   };
+
+  if (modal) {
+    document.body.classList.add("active_modal");
+  } else {
+    document.body.classList.remove("active_modal");
+  }
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   // const logOutUser = () => {

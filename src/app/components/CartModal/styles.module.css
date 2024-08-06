@@ -11,12 +11,10 @@ body.active-modal {
 
 .modal,
 .overlay {
-  /* Set margin-top for a fixed header */
-  margin-top: 80px;
-  /* Fixed width for the modal */
+ 
   width: 30vw;
   /* Calculated height excluding the header */
-  height: calc(100vh - 80px);
+  height: 100vh;
   /* Align the modal to the top */
   top: 0;
   /* Move the modal to the far right */
@@ -40,7 +38,7 @@ body.active-modal {
   /* Semi-transparent background */
   background-color: rgba(0, 0, 0, 0.5);
   /* Ensure overlay covers the full width */
-  width: 100vw;
+  width: 40vw;
   /* Ensure overlay covers the full height */
   height: 100vh;
   /* Make sure the overlay is behind the modal */
@@ -49,7 +47,7 @@ body.active-modal {
 
 .modal_content {
   /* Align content to the top right */
-  position: absolute;
+  position: relative;
   top: 0;
   right: 0;
   /* Remove horizontal translation */
@@ -57,8 +55,7 @@ body.active-modal {
   /* Set line-height */
   line-height: 1.4;
   /* Background color */
-  background: #f1f1f1;
-  /* Padding for the content */
+
   padding: 14px 28px;
   /* Border radius for rounded corners */
   border-radius: 3px;
@@ -80,6 +77,7 @@ body.active-modal {
 .cart_container {
   /* Flexbox layout for cart container */
   display: flex;
+  flex-direction: column;
   /* Space items between */
   justify-content: space-between;
   /* Full viewport height minus header */
@@ -87,8 +85,6 @@ body.active-modal {
 }
 
 .list_container {
-  /* Set width of list container */
-  width: 50vw;
   /* Flexbox layout */
   display: flex;
   /* Arrange items in a column */
@@ -96,17 +92,14 @@ body.active-modal {
 }
 
 .product_container {
-  /* Set width of product container */
-  width: 38vw;
-  /* Flexbox layout */
+  flex-wrap: wrap;
+  margin: 12px 0;
   display: flex;
   /* Background color */
   background: white;
   /* Center items vertically */
   align-items: center;
-  /* Margin between products */
-  margin: 30px;
-  /* Padding inside the container */
+
   padding: 20px;
   /* Border styling */
   border: 1px solid #000;
@@ -160,17 +153,10 @@ body.active-modal {
   /* Set text color */
   color: black !important;
   /* Fixed position to the right */
-  position: fixed;
   right: 0px;
   /* Set height */
-  height: 40vh;
   /* Background color */
   background: white;
-  /* Set width */
-  width: 30vw;
-  /* Margin around the container */
-  margin: 30px;
-  /* Padding inside the container */
   padding: 40px 20px 20px 20px;
   /* Border styling */
   border: 1px solid #000;

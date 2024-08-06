@@ -1,10 +1,9 @@
 .product_container {
-  width: 250px;
-  display: flex;
+  display: flex !important;
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: space-between;
-  margin: 40px;
+  margin-bottom: 30px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
   padding: 30px;
@@ -13,7 +12,13 @@
 }
 
 .product_container_img {
-  margin-right: 20px;
+  display: block;
+  margin: 0 auto 20px;
+  width: auto;
   max-width: 150px;
-  max-height: 200px;
+  height: auto;
+}
+
+.product_details {
+  margin-top: auto;
 }

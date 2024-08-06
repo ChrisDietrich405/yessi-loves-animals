@@ -27,12 +27,19 @@ const ProductCard = ({ id, image, price, description, title }) => {
         src={image}
         alt={title}
       />
-      <Typography sx={{ color: "black", marginTop: "10px" }} variant="p">
-        {title}
-      </Typography>
-      <Box>
-        {/* <Link href={`/products/${id}`}>Details</Link> */}
-        <Typography sx={{ color: "black", margin: "5px 0" }}>
+      <Box className={styles.product_details}>
+        <Typography sx={{ color: "black", marginTop: "10px" }} variant="p">
+          {title}
+        </Typography>
+
+        <Typography
+          sx={{
+            color: "black",
+            margin: "5px 0",
+            fontSize: "24px",
+            fontWeight: "bold",
+          }}
+        >
           {formatter.format(price)}
         </Typography>
         <Button

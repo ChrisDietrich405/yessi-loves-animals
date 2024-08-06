@@ -28,6 +28,12 @@
   object-fit: cover;
 }
 
+.product_container_img {
+  width: auto;
+  max-width: 100%;
+  height: auto;
+}
+
 @media screen and (max-width: 410px) {
   .image_list_wrapper {
     grid-auto-rows: 200px;

@@ -21,8 +21,8 @@ export default function Home() {
             sx={{ display: "flex", justifyContent: "center" }}
           >
             <Image
-              width={400}
-              height={500}
+              width={233}
+              height={333}
               className={styles.product_container_img}
               src="/img/yessi1.jpg"
               alt="Owner of an animal sanctuary holding her chicken."

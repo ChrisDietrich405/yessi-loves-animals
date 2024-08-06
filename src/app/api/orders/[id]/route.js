@@ -34,11 +34,15 @@ export const PUT = async (req, { params }) => {
 
   try {
     const currentOrder = await OrdersModel.findOne({ userId });
-    console.log("hello", currentOrder);
+    console.log("currentOrder", currentOrder);
 
+
+    //THIS ISN'T WORKING AND i DON'T WHY
     if (currentOrder.userId !== userId) {
-      // return NextResponse.json({ message: "Unauthorized user" }, { status: 401 });
-      return false;
+      return NextResponse.json(
+        { message: "Unauthorized user" },
+        { status: 401 }
+      );
     }
 
     const body = await req.json();
@@ -55,4 +59,3 @@ export const PUT = async (req, { params }) => {
     return handleMongoError();
   }
 };
-

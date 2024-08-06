@@ -50,7 +50,6 @@ export const PATCH = async (req) => {
   try {
     let order = await OrdersModel.findOne({ userId });
     order.paymentStatus = "cancel";
-    console.log(order);
     await order.save();
 
     return NextResponse.json({ message: "success" }, { status: 201 });

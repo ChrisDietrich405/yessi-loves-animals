@@ -7,8 +7,7 @@ import styles from "./page.module.css";
 export default function Home() {
   return (
     <Box sx={{ backgroundColor: "#282c34" }}>
-    
-      <Container sx={{ margin: "40px" }}>
+      <Container className={styles.container}>
         <Grid
           container
           mt={2}

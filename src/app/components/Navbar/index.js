@@ -1,6 +1,7 @@
 //clothes
-
-import * as React from "react";
+"use client";
+import { useContext } from "react";
+import UserContext from "../../context/UserContext";
 import Link from "next/link";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import AppBar from "@mui/material/AppBar";
@@ -13,6 +14,10 @@ import Image from "next/image";
 import styles from "./style.module.css";
 
 export default function ButtonAppBar() {
+  // const { modal } = useContext(UserContext);
+
+  // {modal}
+
   return (
     <Box>
       <AppBar position="static" sx={{ backgroundColor: "#282c34" }}>

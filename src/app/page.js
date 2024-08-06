@@ -1,11 +1,13 @@
 import Image from "next/image";
 import { Box, Container, Grid, Typography } from "@mui/material";
 import ImageList from "./components/ImageList";
+
 import styles from "./page.module.css";
 
 export default function Home() {
   return (
     <Box sx={{ backgroundColor: "#282c34" }}>
+    
       <Container sx={{ margin: "40px" }}>
         <Grid
           container

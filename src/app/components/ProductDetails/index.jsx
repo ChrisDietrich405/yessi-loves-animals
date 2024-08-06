@@ -3,12 +3,13 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { api } from "../../api/product-api";
-import styles from "./styles.module.css";
 import { Button, Container, Typography, Box } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
+
+import styles from "./styles.module.css";
 
 const ProductDetails = ({ id }) => {
   const [productData, setProductData] = useState({});

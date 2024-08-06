@@ -34,11 +34,12 @@ export const PUT = async (req, { params }) => {
 
   try {
     const currentOrder = await OrdersModel.findOne({ userId });
-    console.log("currentOrder", currentOrder);
+    console.log("currentOrder", currentOrder.userId);
 
 
     //THIS ISN'T WORKING AND i DON'T WHY
     if (currentOrder.userId !== userId) {
+      console.log("big problems")
       return NextResponse.json(
         { message: "Unauthorized user" },
         { status: 401 }
@@ -47,12 +48,12 @@ export const PUT = async (req, { params }) => {
 
     const body = await req.json();
 
-    const updatedProduct = await OrdersModel.findOneAndUpdate(
+    const updatedOrder = await OrdersModel.findOneAndUpdate(
       { _id: id },
       body,
       { new: true }
     );
-    await updatedProduct.save();
+    await updatedOrder.save();
 
     return NextResponse.json({ message: "success" }, { status: 200 });
   } catch (error) {

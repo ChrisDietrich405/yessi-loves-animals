@@ -11,12 +11,8 @@ const isPasswordValid = (password) => {
   return passwordRegex.test(password);
 };
 
-// const isEmailValid = (email) => {
-//   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-//   return emailRegex.test(email);
-// };
-
 export async function POST(req) {
+  await dbConnect();
   const { name, streetAddress, city, state, zipCode, email, password } =
     await req.json();
 
@@ -64,7 +60,7 @@ export async function POST(req) {
     );
   }
 
-  const existingEmail = await UsersModel.findOne({ email });
+  const existingEmail = await UsersModel.findOne({ email: email });
 
   if (existingEmail) {
     return NextResponse.json(
@@ -76,7 +72,6 @@ export async function POST(req) {
   }
 
   try {
-    await dbConnect();
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
@@ -89,6 +84,7 @@ export async function POST(req) {
       email,
       password: hashedPassword,
     });
+    console.log(newUser);
 
     await newUser.save();
 
@@ -101,21 +97,59 @@ export async function POST(req) {
 export async function PUT(req) {
   const requestHeaders = new Headers(req.headers);
   const userId = requestHeaders.get("x-decoded-id");
-  const user = await UsersModel.findOne({ _id: userId });
 
   const userBody = await req.json();
+
+  if (userBody.email) {
+    return NextResponse.json(
+      { status: 409, message: "Duplicate email" },
+      {
+        status: 409,
+      }
+    );
+  }
+
+  if (userBody.email && !emailValidator(email)) {
+    return NextResponse.json(
+      {
+        status: 400,
+        message: "Incorrect email format",
+      },
+      {
+        status: 400,
+      }
+    );
+  }
 
   try {
     const updatedUser = await UsersModel.findOneAndUpdate(
       { _id: userId },
       { $set: userBody },
-      { new: true, useFindAndModify: false } // 'new' returns the modified document
+      { new: true, useFindAndModify: false }
     );
-    console.log("body ", updatedUser);
 
     return NextResponse.json(updatedUser, {
       status: 200,
     });
+  } catch (error) {
+    return handleMongoError();
+  }
+}
+
+export async function GET(req) {
+  const requestHeaders = new Headers(req.headers);
+  const userId = requestHeaders.get("x-decoded-id");
+
+  try {
+    const customer = await UsersModel.findOne({ _id: userId });
+
+    const custValue = customer._id.valueOf();
+
+    if (userId !== custValue) {
+      return NextResponse.json({ status: 401, message: "Unauthorized" });
+    }
+
+    return NextResponse.json({ status: 200, customer });
   } catch (error) {
     return handleMongoError();
   }

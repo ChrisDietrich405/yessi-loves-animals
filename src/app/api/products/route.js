@@ -10,15 +10,27 @@ export const GET = async () => {
     const products = await ProductsModel.find();
     return NextResponse.json(products, { status: 200 });
   } catch (error) {
-    // return handleMongoError();
+    return handleMongoError();
   }
 };
 
 export const POST = async (req) => {
-  const product = await req.json();
+  const { name, quantity, price, image, description } = await req.json();
+
+  if (!name || !quantity || !price || !image || !description) {
+    return NextResponse.json(
+      {
+        status: 400,
+        message: "Please add all necessary information",
+      },
+      {
+        status: 400,
+      }
+    );
+  }
+
   try {
-    const connection = await dbConnect();
-    console.log(connection);
+    await dbConnect();
     const requestHeaders = new Headers(req.headers);
 
     const userId = requestHeaders.get("x-decoded-id");
@@ -32,12 +44,18 @@ export const POST = async (req) => {
       );
     }
 
-    const newProduct = await ProductsModel.create(product);
+    const newProduct = new ProductsModel({
+      name,
+      quantity,
+      price,
+      image,
+      description,
+    });
+
+    await ProductsModel.create(newProduct);
 
     return NextResponse.json(newProduct, { status: 201 });
   } catch (error) {
-    console.log(error);
-    // return handleMongoError(error, NextResponse
-    // );
+    return handleMongoError(error, NextResponse);
   }
 };

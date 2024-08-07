@@ -61,6 +61,7 @@ export async function PUT(req, { params }) {
 }
 
 export async function DELETE(req, { params }) {
+  dbConnect();
   const requestHeaders = new Headers(req.headers);
   const userId = requestHeaders.get("x-decoded-id");
 

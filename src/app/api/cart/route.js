@@ -1,9 +1,11 @@
+import dbConnect from "../../config/db";
 import CartModel from "../../models/cart";
 import { NextResponse } from "next/server";
 
 //THIS WOULD BE THE CART ICON BUTTON
 
 export const GET = async (req) => {
+  dbConnect();
   const requestHeaders = new Headers(req.headers);
 
   const userId = requestHeaders.get("x-decoded-id");
@@ -13,7 +15,7 @@ export const GET = async (req) => {
   }
 
   try {
-    const foundCart = await CartModel.findOne({ userId });
+    const foundCart = await CartModel.findOne({ userId: userId });
 
     if (!foundCart) {
       return NextResponse.json(
@@ -29,6 +31,7 @@ export const GET = async (req) => {
 };
 
 export const POST = async (req) => {
+  dbConnect();
   const requestHeaders = new Headers(req.headers);
 
   const userId = requestHeaders.get("x-decoded-id");

@@ -1,4 +1,7 @@
+import dbConnect from "../../config/db";
 import OrdersModel from "../../models/orders";
+import ProductsModel from "../../models/products";
+import UsersModel from "../../models/users";
 import { NextResponse, NextRequest } from "next/server";
 import mongoose from "mongoose";
 import { handleMongoError } from "@/app/exceptions/handle-mongo-error";
@@ -19,15 +22,30 @@ export const GET = async (req) => {
 };
 
 export const POST = async (req) => {
+  dbConnect();
   const requestHeaders = new Headers(req.headers);
 
   const userId = requestHeaders.get("x-decoded-id");
 
-  if (!userId) {
-    return NextResponse.json({ message: "Unauthorized user" }, { status: 401 });
+  const user = await UsersModel.findOne({ _id: userId });
+
+  if (!user) {
+    return NextResponse.json(
+      { message: "User doesn't exist" },
+      { status: 401 }
+    );
   }
 
   const body = await req.json();
+  const allItems = body.items;
+
+  const products = await ProductsModel.find({ _id: { $in: allItems } });
+
+  ///////THIS IS TEMPORARY BECAUSE WE NEED TO DETERMINE EXACTLY THE PRODUCTS THAT AREN'T AVAILABLE
+  if (allItems.length !== products.length) {
+    return NextResponse.json({ message: "Out of stock" }, { status: 400 });
+  }
+
   try {
     const result = await OrdersModel.create(body);
 
@@ -39,6 +57,7 @@ export const POST = async (req) => {
 
 // THIS IS WHEN A CUSTOMER CLICKS A BUTTON TO CANCEL THE ORDER
 export const PATCH = async (req) => {
+  dbConnect();
   const requestHeaders = new Headers(req.headers);
 
   const userId = requestHeaders.get("x-decoded-id");
@@ -49,6 +68,7 @@ export const PATCH = async (req) => {
 
   try {
     let order = await OrdersModel.findOne({ userId });
+    console.log("order", order);
     order.paymentStatus = "cancel";
     await order.save();
 
@@ -57,5 +77,3 @@ export const PATCH = async (req) => {
     return handleMongoError();
   }
 };
-
-

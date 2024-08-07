@@ -15,6 +15,7 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import CartModal from "../CartModal";
+
 import styles from "./style.module.css";
 
 export default function ButtonAppBar() {
@@ -83,6 +84,7 @@ export default function ButtonAppBar() {
                 src="/img/yessi-logo-200.png"
                 alt="website logo"
               />
+           
             </Link>
           </Box>
 

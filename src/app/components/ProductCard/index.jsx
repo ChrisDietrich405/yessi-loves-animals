@@ -21,10 +21,10 @@ const ProductCard = ({ id, image, price, description, title }) => {
     <Container className={styles.product_container}>
       {" "}
       <Image
-        width={100}
-        height={100}
+        width={200}
+        height={200}
         className={styles.product_container_img}
-        src={image}
+        src={`/${image}`}
         alt={title}
       />
       <Box className={styles.product_details}>

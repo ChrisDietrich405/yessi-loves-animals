@@ -1,0 +1,30 @@
+[
+  {
+    "id": "1",
+    "name": "yellow t-shirt",
+    "price": "30.00",
+    "description": "nice yellow vegan shirt",
+    "image": "./img/tshirt.jpeg"
+  },
+  {
+    "id": "2",
+    "name": "yellow t-shirt",
+    "price": "30.00",
+    "description": "nice yellow vegan shirt",
+    "image": "./img/tshirt2.jpeg"
+  },
+  {
+    "id": "3",
+    "name": "yellow t-shirt",
+    "price": "30.00",
+    "description": "nice yellow vegan shirt",
+    "image": "./img/tshirt3.jpeg"
+  },
+  {
+    "id": "4",
+    "name": "yellow t-shirt",
+    "price": "30.00",
+    "description": "nice yellow vegan shirt",
+    "image": "./img/tshirt4.jpeg"
+  }
+]

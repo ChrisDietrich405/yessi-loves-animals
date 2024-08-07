@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Box, Container, Grid, Typography } from "@mui/material";
 import ImageList from "./components/ImageList";
 
+
 import styles from "./page.module.css";
 
 export default function Home() {
@@ -86,6 +87,7 @@ export default function Home() {
           “Blessed are the merciful, for they will receive mercy.” —Matthew 5:7
         </Typography>
       </Container>
+      
     </Box>
   );
 }

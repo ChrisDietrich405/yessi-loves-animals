@@ -1,4 +1,4 @@
-import mongoose from "@/lib/mongoose";
+import mongoose from "mongoose";
 import { Schema, model } from "mongoose";
 
 // Define the product schema
@@ -14,22 +14,22 @@ const productSchema = new Schema({
     type: Number,
     required: true,
   },
-  images: {
-    type: [],
+  image: {
+    type: String,
     required: true,
   },
   description: {
     type: String,
     required: true,
   },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-  updatedAt: {
-    type: Date,
-    default: Date.now,
-  },
+  // createdAt: {
+  //   type: Date,
+  //   default: Date.now,
+  // },
+  // updatedAt: {
+  //   type: Date,
+  //   default: Date.now,
+  // },
   // category: {
   //   type: String,
   //   required: true,
@@ -55,5 +55,3 @@ if (!mongoose.models[modelName]) {
 }
 
 export default mongoose.models[modelName];
-
-

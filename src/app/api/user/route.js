@@ -1,11 +1,25 @@
+import dbConnect from "../../config/db";
 import { NextResponse } from "next/server";
 import UsersModel from "@/app/models/users";
+import emailValidator from "../../shared/emailValidator";
 import bcrypt from "bcryptjs";
 import { handleMongoError } from "@/app/exceptions/handle-mongo-error";
+
+const isPasswordValid = (password) => {
+  const passwordRegex =
+    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  return passwordRegex.test(password);
+};
+
+// const isEmailValid = (email) => {
+//   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+//   return emailRegex.test(email);
+// };
 
 export async function POST(req) {
   const { name, streetAddress, city, state, zipCode, email, password } =
     await req.json();
+
   if (
     !name ||
     !streetAddress ||
@@ -26,9 +40,19 @@ export async function POST(req) {
     );
   }
 
-  const emailFormat = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+  if (!isPasswordValid(password)) {
+    return NextResponse.json(
+      {
+        status: 400,
+        message: "Password not strong enough",
+      },
+      {
+        status: 400,
+      }
+    );
+  }
 
-  if (!email.match(emailFormat)) {
+  if (!emailValidator(email)) {
     return NextResponse.json(
       {
         status: 400,
@@ -41,6 +65,7 @@ export async function POST(req) {
   }
 
   const existingEmail = await UsersModel.findOne({ email });
+
   if (existingEmail) {
     return NextResponse.json(
       { status: 409, message: "Duplicate email" },
@@ -51,6 +76,7 @@ export async function POST(req) {
   }
 
   try {
+    await dbConnect();
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 

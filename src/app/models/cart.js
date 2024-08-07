@@ -73,7 +73,7 @@
 // // Export the CartModel
 // export default mongoose.models[modelName];
 
-import mongoose from "@/lib/mongoose";
+import mongoose from "mongoose";
 
 const { Schema } = mongoose;
 

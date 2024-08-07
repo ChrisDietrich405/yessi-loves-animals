@@ -1,4 +1,6 @@
+import dbConnect from "../../config/db";
 import { NextResponse } from "next/server";
+import emailValidator from "../../shared/emailValidator";
 import CustomersModel from "../../models/users";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
@@ -9,7 +11,6 @@ dotenv.config();
 
 export const POST = async (req) => {
   const { email, password } = await req.json();
-  console.log(email);
 
   if (!email || !password) {
     return NextResponse.json(
@@ -23,8 +24,7 @@ export const POST = async (req) => {
     );
   }
 
-  const emailFormat = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-  if (!email.match(emailFormat)) {
+  if (!emailValidator(email)) {
     return NextResponse.json(
       {
         status: 400,
@@ -36,6 +36,7 @@ export const POST = async (req) => {
     );
   }
   try {
+    await dbConnect();
     const existingAccount = await CustomersModel.findOne({ email });
     if (!existingAccount) {
       return NextResponse.json(
@@ -60,20 +61,19 @@ export const POST = async (req) => {
     }
 
     const token = jwt.sign(
-      { userId: existingAccount._id },
+      { userId: existingAccount._id, isAdmin: existingAccount.isAdmin },
       process.env.JWT_SECRET,
       {
         expiresIn: "2d",
-      }
+      }, 
     );
 
     return NextResponse.json({
       userId: existingAccount._id,
       token,
       status: 200,
-      isAdmin: existingAccount.isAdmin,
     });
   } catch (error) {
-    return handleMongoError()
+    return handleMongoError();
   }
 };

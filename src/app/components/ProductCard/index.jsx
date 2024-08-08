@@ -5,11 +5,11 @@ import { useRouter } from "next/navigation";
 import styles from "./styles.module.css";
 import { Button, Container, Typography, Box } from "@mui/material";
 
-const ProductCard = ({ id, image, price, description, title }) => {
+const ProductCard = ({ _id, image, price, description, title }) => {
   const router = useRouter();
 
-  const handleNavigateToDetailsPage = (id) => {
-    router.push(`/products/${id}`);
+  const handleNavigateToDetailsPage = (_id) => {
+    router.push(`/products/${_id}`);
   };
 
   const formatter = Intl.NumberFormat("en-US", {
@@ -31,6 +31,7 @@ const ProductCard = ({ id, image, price, description, title }) => {
         <Typography sx={{ color: "black", marginTop: "10px" }} variant="p">
           {title}
         </Typography>
+        <h1>hello{_id}</h1>
 
         <Typography
           sx={{
@@ -51,7 +52,7 @@ const ProductCard = ({ id, image, price, description, title }) => {
               backgroundColor: "#282c35", // Hover color
             },
           }}
-          onClick={() => handleNavigateToDetailsPage(id)}
+          onClick={() => handleNavigateToDetailsPage(_id)}
         >
           Details
         </Button>

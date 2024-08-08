@@ -1,5 +1,10 @@
+
+
+
 "use client";
 import { useState } from "react";
+import { CartContext } from "@/app/context/CartContext";
+import ShoppingCartButton from "@/app/ShoppingCartButton";
 import Link from "next/link";
 import Image from "next/image";
 import AppBar from "@mui/material/AppBar";
@@ -21,10 +26,11 @@ import styles from "./style.module.css";
 export default function ButtonAppBar() {
   const [modal, setModal] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  // const [cartProducts, addProduct] = useContext(CartContext);
 
-  const toggleModal = () => {
-    setModal(!modal);
-  };
+  // const toggleModal = () => {
+  //   setModal(!modal);
+  // };
 
   const toggleDrawer = (open) => () => {
     setDrawerOpen(open);
@@ -38,17 +44,17 @@ export default function ButtonAppBar() {
       onKeyDown={toggleDrawer(false)}
     >
       <List>
-        <ListItem button>
+        <ListItem>
           <Link href="/" passHref>
             <ListItemText primary="Home" />
           </Link>
         </ListItem>
-        <ListItem button>
+        <ListItem>
           <Link href="/products" passHref>
             <ListItemText primary="Products" />
           </Link>
         </ListItem>
-        <ListItem button>
+        <ListItem>
           <Link
             href="https://www.youtube.com/@michiveg"
             passHref
@@ -84,7 +90,6 @@ export default function ButtonAppBar() {
                 src="/img/yessi-logo-200.png"
                 alt="website logo"
               />
-           
             </Link>
           </Box>
 
@@ -120,10 +125,11 @@ export default function ButtonAppBar() {
                 Products
               </Button>
             </Link>
-            <ShoppingCartIcon
-              onClick={toggleModal}
+            <ShoppingCartButton />
+            {/* <ShoppingCartIcon
+              // onClick={toggleModal}
               sx={{ cursor: "pointer" }}
-            />
+            /> */}
           </Box>
         </Toolbar>
       </AppBar>
@@ -132,7 +138,7 @@ export default function ButtonAppBar() {
         {drawerContent}
       </Drawer>
 
-      <CartModal open={modal} handleClose={toggleModal} />
+      {/* <CartModal open={modal} /> */}
     </Box>
   );
 }

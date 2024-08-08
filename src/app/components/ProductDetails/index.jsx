@@ -1,8 +1,11 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { CartContext } from "../../context/CartContext";
 import { useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import Image from "next/image";
 import { api } from "../../api/product-api";
+import axios from "axios";
 import { Button, Container, Typography, Box } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -11,44 +14,27 @@ import CardMedia from "@mui/material/CardMedia";
 
 import styles from "./styles.module.css";
 
-const ProductDetails = ({ id }) => {
+//AT SOME POINT THE LOGIC SHOULD BE WHEN USER CLICKS ADD TO CART A MODAL POPS UP AND ASKS CUSTOMER IF THEY WANT TO CONTINUE SHOPPING (MAYBE IN THE TOAST COULD SAY SEE CART)
+
+const ProductDetails = () => {
   const [productData, setProductData] = useState({});
   const [cartProducts, setCartProducts] = useState([]);
+  const { addProduct } = useContext(CartContext);
 
   const router = useRouter();
+  const params = useParams();
 
   const fetchProductDetails = async () => {
-    // setLoading(true);
-    const response = await api.get(`/products/${id}`);
-    const { data } = response;
-    setProductData(data);
-    // setLoading(false);
-  };
-
-  const handleCartItems = () => {
-    let newCartProducts = [];
-    const index = cartProducts.findIndex(
-      (cartProduct) => cartProduct.id === productData.id
-    );
-    if (index !== -1) {
-      newCartProducts = cartProducts.map((cartProduct) => {
-        if (cartProduct.id === productData.id) {
-          return { ...cartProduct, total: cartProduct.total + 1 };
-        } else {
-          return cartProduct;
-        }
-      });
-      setCartProducts(newCartProducts);
-    } else {
-      newCartProducts = [...cartProducts, { ...productData, total: 1 }];
-      setCartProducts(newCartProducts);
+    try {
+      const response = await axios(
+        `http://localhost:3000/api/products/${params.id}`
+      );
+      console.log(response.data);
+      const { data } = response;
+      setProductData(data);
+    } catch (error) {
+      console.error("Error fetching product details:", error);
     }
-
-    // if (loading === false) {
-    localStorage.setItem("cartProducts", JSON.stringify(newCartProducts));
-    // }
-
-    router.push("/cart");
   };
 
   useEffect(() => {
@@ -107,7 +93,7 @@ const ProductDetails = ({ id }) => {
                 },
               }}
               variant="contained"
-              onClick={handleCartItems}
+              onClick={() => addProduct(productData)}
             >
               Add to Cart{" "}
             </Button>

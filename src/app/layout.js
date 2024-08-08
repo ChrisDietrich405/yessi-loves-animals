@@ -1,5 +1,5 @@
 import Navbar from "./components/Navbar";
-import { UserProvider } from "./context/UserContext";
+import { CartProvider } from "./context/CartContext";
 
 import { Box } from "@mui/material";
 import { Inter } from "next/font/google";
@@ -16,12 +16,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <UserProvider>
+        <CartProvider>
           <Navbar />
           <Box component="main" minHeight={`calc(100dvh - 355px)`}>
             {children}
           </Box>
-        </UserProvider>
+        </CartProvider>
       </body>
     </html>
   );

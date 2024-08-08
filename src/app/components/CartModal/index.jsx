@@ -1,7 +1,9 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useRouter } from "next/navigation";
+
 import { Button, Chip } from "@mui/material";
+
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
@@ -12,9 +14,13 @@ import CloseIcon from "@mui/icons-material/Close";
 import styles from "./styles.module.css";
 
 export default function ShoppingCartModal({ open, handleClose }) {
-  const [modal, setModal] = useState(false);
+  const [modal, setModal] = useState(true);
   const [cartProducts, setCartProducts] = useState([]);
   const [cartTotal, setCartTotal] = useState({});
+
+  const toggleModal = () => {
+    setModal(!modal);
+  };
 
   const router = useRouter();
 
@@ -73,7 +79,7 @@ export default function ShoppingCartModal({ open, handleClose }) {
 
   return (
     <Modal
-      open={open}
+      open={modal}
       onClose={handleClose}
       aria-labelledby="modal-title"
       aria-describedby="modal-description"
@@ -151,9 +157,12 @@ export default function ShoppingCartModal({ open, handleClose }) {
               </ul>
             </div>
           </div>
-          {/* <button className={styles.close_modal} onClick={toggleModal}>
+          {/* <button
+            className={styles.close_modal}
+            onClick={() => setModal(false)}
+          >
             CLOSE
-            </button> */}
+          </button> */}
         </div>
       </div>
     </Modal>

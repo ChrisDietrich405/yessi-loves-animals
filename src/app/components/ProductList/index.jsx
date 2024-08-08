@@ -16,9 +16,11 @@ const ProductList = () => {
     setLoading(true);
     const response = await api.get("http://localhost:3000/api/products");
     const { data } = response;
+    console.log("DATA", data);
     setProducts(data);
     setLoading(false);
   };
+
   useEffect(() => {
     fetchProducts();
   }, []);

@@ -42,12 +42,23 @@ const ProductDetails = () => {
   }, []);
 
   useEffect(() => {
+    if (cartProducts.length > 0) {
+      localStorage.setItem("cartProducts", JSON.stringify(cartProducts));
+    } else {
+      localStorage.removeItem("cartProducts"); // Clean up if cart is empty
+    }
+  }, [cartProducts]); // This effect runs whenever cartProducts changes
+
+  useEffect(() => {
+    console.log("helloooooo");
     const localStorageProducts = localStorage.getItem("cartProducts");
+    console.log("hello", localStorageProducts);
     if (localStorageProducts) {
       const productsArray = JSON.parse(localStorageProducts);
+      console.log("cartProducts", productsArray);
       setCartProducts(productsArray);
     }
-  }, []);
+  }, [cartProducts]);
 
   return (
     <Box sx={{ padding: "20px" }}>

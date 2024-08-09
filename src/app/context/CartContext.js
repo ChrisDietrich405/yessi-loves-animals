@@ -7,6 +7,7 @@ const CartProvider = ({ children }) => {
   const [cartProducts, setCartProducts] = useState([]);
 
   const addProduct = (productData) => {
+    console.log("first")
     const index = cartProducts.findIndex(
       (cartProduct) => cartProduct.id === productData.id
     );
@@ -23,8 +24,8 @@ const CartProvider = ({ children }) => {
     } else {
       // newCartProducts = [...cartProducts, { ...productData, total: 1 }];
       setCartProducts((state) => [...state, { ...productData, total: 1 }]);
+      console.log("cartProducts", cartProducts);
     }
-
     // if (loading === false) {
 
     // }

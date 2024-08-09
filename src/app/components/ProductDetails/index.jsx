@@ -60,7 +60,13 @@ const ProductDetails = () => {
         }}
       >
         <Card sx={{ maxWidth: "90%", padding: "0 10px 30px 10px" }}>
-          <CardMedia
+          <Image
+            src={`/${productData.image}`}
+            alt={productData.description}
+            width={100}
+            height={100}
+          />
+          {/* <CardMedia
             sx={{
               height: 300,
               width: 220,
@@ -69,10 +75,10 @@ const ProductDetails = () => {
               justifyContent: "center",
             }}
             image={productData.image}
-            title={productData.title}
-          />
+           
+          /> */}
           <CardContent>
-            <Typography variant="h6">{productData.title}</Typography>
+            <Typography variant="h6">{productData.name}</Typography>
             <Typography>
               <b>Price: </b>${Number(productData.price).toFixed(2)}
             </Typography>

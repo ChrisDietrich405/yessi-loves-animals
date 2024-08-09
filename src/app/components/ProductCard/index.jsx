@@ -31,7 +31,6 @@ const ProductCard = ({ _id, image, price, description, title }) => {
         <Typography sx={{ color: "black", marginTop: "10px" }} variant="p">
           {title}
         </Typography>
-        <h1>hello{_id}</h1>
 
         <Typography
           sx={{
